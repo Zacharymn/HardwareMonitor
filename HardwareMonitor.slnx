@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="HardwareMonitor.Api/HardwareMonitor.Api.csproj" />
+  <Project Path="HardwareMonitor.Shared/HardwareMonitor.Shared.csproj" />
+  <Project Path="HardwareMonitor.Web/HardwareMonitor.Web.csproj" />
+</Solution>
