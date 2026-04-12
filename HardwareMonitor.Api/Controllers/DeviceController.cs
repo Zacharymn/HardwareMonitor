@@ -1,3 +1,5 @@
+using HardwareMonitor.Api.Data;
+using HardwareMonitor.Shared.DTOs;
 using HardwareMonitor.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,21 +9,31 @@ namespace HardwareMonitor.Api.Controllers;
 [Route("[controller]")]
 public class DeviceController : ControllerBase
 {
+  private readonly AppDbContext _db;
+
+  public DeviceController(AppDbContext db)
+  {
+    _db = db;
+  }
   [HttpGet]
   public List<Device> Get()
   {
-    var devices = new List<Device>
-      {
-        new Device { Id = 1, Name = "Thermostat", Location = "Living Room", DeviceId = Guid.NewGuid(), Value = 72.5, Timestamp = DateTime.UtcNow },
-        new Device { Id = 2, Name = "Humidity Sensor", Location = "Basement", DeviceId = Guid.NewGuid(), Value = 45.0, Timestamp = DateTime.UtcNow }
-      };
-
-    return devices;
+    return _db.Devices.ToList();
   }
 
   [HttpPost]
-  public Device Create(Device device)
+  public Device Create(CreateDeviceDto deviceDto)
   {
+    var device = new Device
+    {
+      Name = deviceDto.Name,
+      Location = deviceDto.Location,
+      Value = deviceDto.Value,
+      Description = deviceDto.Description,
+    };
+
+    _db.Devices.Add(device);
+    _db.SaveChanges();
     return device;
   }
 }
