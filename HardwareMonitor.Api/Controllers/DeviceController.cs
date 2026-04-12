@@ -17,5 +17,11 @@ public class DeviceController : ControllerBase
       };
 
     return devices;
-  } 
+  }
+
+  [HttpPost]
+  public Device Create(Device device)
+  {
+    return device;
+  }
 }
