@@ -27,10 +27,14 @@ public class DeviceController : ControllerBase
     var device = new Device
     {
       Name = deviceDto.Name,
+      Type = deviceDto.Type, 
+      Measurement = deviceDto.Measurement,  
+      Unit = deviceDto.Unit,  
       Location = deviceDto.Location,
-      Value = deviceDto.Value,
+      SubLocation = deviceDto.SubLocation,
       Description = deviceDto.Description,
     };
+    
 
     _db.Devices.Add(device);
     _db.SaveChanges();

@@ -15,10 +15,16 @@ public class AppDbContext : DbContext
 
           foreach (var property in entity.GetProperties())
           {
-              property.SetColumnName(property.GetColumnName().ToLower());
+              property.SetColumnName(ToSnakeCase(property.GetColumnName()));
           }
       }
   }
 
+  private static string ToSnakeCase(string name)
+  {
+      return string.Concat(name.Select((c, i) => i > 0 && char.IsUpper(c) ? "_" + c : c.ToString())).ToLower();
+  }
+
   public DbSet<Device> Devices {get; set;}
+  public DbSet<SensorReading> SensorReadings {get; set;}
 }

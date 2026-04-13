@@ -3,6 +3,7 @@ using System;
 using HardwareMonitor.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HardwareMonitor.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260413161026_RedoStructure")]
+    partial class RedoStructure
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,7 +40,7 @@ namespace HardwareMonitor.Api.Migrations
 
                     b.Property<Guid>("DeviceId")
                         .HasColumnType("uuid")
-                        .HasColumnName("device_id");
+                        .HasColumnName("deviceid");
 
                     b.Property<string>("Location")
                         .HasColumnType("text")
@@ -53,7 +56,7 @@ namespace HardwareMonitor.Api.Migrations
 
                     b.Property<string>("SubLocation")
                         .HasColumnType("text")
-                        .HasColumnName("sub_location");
+                        .HasColumnName("sublocation");
 
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("timestamp with time zone")
@@ -84,11 +87,11 @@ namespace HardwareMonitor.Api.Migrations
 
                     b.Property<Guid>("DeviceId")
                         .HasColumnType("uuid")
-                        .HasColumnName("device_id");
+                        .HasColumnName("deviceid");
 
                     b.Property<int?>("DeviceId1")
                         .HasColumnType("integer")
-                        .HasColumnName("device_id1");
+                        .HasColumnName("deviceid1");
 
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("timestamp with time zone")
