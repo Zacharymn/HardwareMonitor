@@ -29,6 +29,7 @@ public class SensorReadingController : ControllerBase
     {
       DeviceId = sensorReadingDto.DeviceId,
       Value = sensorReadingDto.Value,
+      Reading = sensorReadingDto.Reading,
     };
     
 
