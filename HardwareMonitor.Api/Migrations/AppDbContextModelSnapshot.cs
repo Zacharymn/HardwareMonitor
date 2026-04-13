@@ -86,10 +86,6 @@ namespace HardwareMonitor.Api.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("device_id");
 
-                    b.Property<int?>("DeviceId1")
-                        .HasColumnType("integer")
-                        .HasColumnName("device_id1");
-
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("timestamp");
@@ -100,16 +96,19 @@ namespace HardwareMonitor.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DeviceId1");
+                    b.HasIndex("DeviceId");
 
-                    b.ToTable("sensorreadings");
+                    b.ToTable("sensor_readings");
                 });
 
             modelBuilder.Entity("HardwareMonitor.Shared.Models.SensorReading", b =>
                 {
                     b.HasOne("HardwareMonitor.Shared.Models.Device", "Device")
                         .WithMany()
-                        .HasForeignKey("DeviceId1");
+                        .HasForeignKey("DeviceId")
+                        .HasPrincipalKey("DeviceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Device");
                 });

@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HardwareMonitor.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260413154600_UpdateDeviceValuesType")]
-    partial class UpdateDeviceValuesType
+    [Migration("20260413165003_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,15 +40,23 @@ namespace HardwareMonitor.Api.Migrations
 
                     b.Property<Guid>("DeviceId")
                         .HasColumnType("uuid")
-                        .HasColumnName("deviceid");
+                        .HasColumnName("device_id");
 
                     b.Property<string>("Location")
                         .HasColumnType("text")
                         .HasColumnName("location");
 
+                    b.Property<string>("Measurement")
+                        .HasColumnType("text")
+                        .HasColumnName("measurement");
+
                     b.Property<string>("Name")
                         .HasColumnType("text")
                         .HasColumnName("name");
+
+                    b.Property<string>("SubLocation")
+                        .HasColumnType("text")
+                        .HasColumnName("sub_location");
 
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("timestamp with time zone")
@@ -58,13 +66,54 @@ namespace HardwareMonitor.Api.Migrations
                         .HasColumnType("text")
                         .HasColumnName("type");
 
-                    b.Property<string>("Value")
-                        .HasColumnType("text")
-                        .HasColumnName("value");
+                    b.Property<string>("Unit")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)")
+                        .HasColumnName("unit");
 
                     b.HasKey("Id");
 
                     b.ToTable("devices");
+                });
+
+            modelBuilder.Entity("HardwareMonitor.Shared.Models.SensorReading", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid>("DeviceId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("device_id");
+
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("timestamp");
+
+                    b.Property<double?>("Value")
+                        .HasColumnType("double precision")
+                        .HasColumnName("value");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DeviceId");
+
+                    b.ToTable("sensor_readings");
+                });
+
+            modelBuilder.Entity("HardwareMonitor.Shared.Models.SensorReading", b =>
+                {
+                    b.HasOne("HardwareMonitor.Shared.Models.Device", "Device")
+                        .WithMany()
+                        .HasForeignKey("DeviceId")
+                        .HasPrincipalKey("DeviceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Device");
                 });
 #pragma warning restore 612, 618
         }

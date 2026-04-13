@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace HardwareMonitor.Api.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("sensor-readings")]
 public class SensorReadingController : ControllerBase
 {
   private readonly AppDbContext _db;

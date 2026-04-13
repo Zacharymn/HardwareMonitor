@@ -9,15 +9,22 @@ public class AppDbContext : DbContext
   
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
-      foreach (var entity in modelBuilder.Model.GetEntityTypes())
-      {
-          entity.SetTableName(entity.GetTableName()!.ToLower());
 
-          foreach (var property in entity.GetProperties())
-          {
-              property.SetColumnName(ToSnakeCase(property.GetColumnName()));
-          }
-      }
+    modelBuilder.Entity<SensorReading>()
+      .HasOne(r => r.Device)
+      .WithMany()
+      .HasForeignKey(r => r.DeviceId)
+      .HasPrincipalKey(d => d.DeviceId);
+
+    foreach (var entity in modelBuilder.Model.GetEntityTypes())
+    {
+        entity.SetTableName(ToSnakeCase(entity.GetTableName()!));
+
+        foreach (var property in entity.GetProperties())
+        {
+            property.SetColumnName(ToSnakeCase(property.GetColumnName()));
+        }
+    }
   }
 
   private static string ToSnakeCase(string name)
