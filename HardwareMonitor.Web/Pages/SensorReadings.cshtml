@@ -1,0 +1,29 @@
+﻿@page "/sensor-readings"
+@model HardwareMonitor.Web.Pages.SensorReadingsModel
+@{
+  ViewData["Title"] = "Sensor Readings";
+}
+
+<h1>Sensor Readings</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Device Name</th>
+      <th>Location</th>
+      <th>Value</th>
+      <th>Timestamp</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var reading in Model.SensorReadings)
+    {
+      <tr>
+        <td>@reading.Device?.Name</td>
+        <td>@reading.Device?.Location</td>
+        <td>@reading.Value</td>
+        <td>@reading.Timestamp</td>
+      </tr>
+    }
+  </tbody>
+</table>

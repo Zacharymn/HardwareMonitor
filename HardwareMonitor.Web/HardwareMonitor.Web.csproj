@@ -6,4 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\HardwareMonitor.Shared\HardwareMonitor.Shared.csproj" />
+  </ItemGroup>
+
 </Project>
